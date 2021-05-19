@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { StateService } from './../shared/state.service';
 
 @Component({
   selector: 'rb-book-list',
@@ -8,15 +9,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   `,
 })
 export class BookListComponent implements OnInit {
-  @Output() newBookEvent = new EventEmitter<string[]>();
   books: string[] = [];
 
-  constructor() {}
+  constructor(private service: StateService) {}
 
   ngOnInit(): void {}
 
   addBook(): void {
-    this.books.push('new book');
-    this.newBookEvent.emit(this.books);
+    this.service.addBook();
+    this.books = this.service.state.books;
   }
 }

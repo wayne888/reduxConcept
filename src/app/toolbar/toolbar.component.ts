@@ -1,16 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { StateService } from './../shared/state.service';
 
 @Component({
   selector: 'rb-toolbar',
   template: `
-    {{ books.length }}
+    {{ service.state.books.length }}
     <hr />
   `,
 })
 export class ToolbarComponent implements OnInit {
-  @Input() books: string[] = [];
+  books: string[] = [];
 
-  constructor() {}
+  constructor(public service: StateService) {}
 
   ngOnInit(): void {}
 }
