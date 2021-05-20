@@ -12,7 +12,10 @@ export class StateService {
   state$ = new BehaviorSubject<BookState>(this.state);
 
   addBook() {
-    this.state.books.push('new book');
+    this.state = {
+      ...this.state,
+      books: [...this.state.books, 'new book'],
+    };
     this.state$.next(this.state);
   }
 }
