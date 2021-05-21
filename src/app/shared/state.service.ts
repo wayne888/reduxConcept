@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { scan, shareReplay, startWith } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +10,16 @@ export class StateService {
     books: [],
   };
 
-  state$ = new BehaviorSubject<BookState>(this.state);
+  messages$ = new Subject<string>();
+
+  state$ = this.messages$.pipe(
+    startWith('initial message'),
+    scan(calculateState, this.state),
+    shareReplay(1)
+  );
 
   dispatch(message: string) {
-    this.state = calculateState(this.state, message);
-    this.state$.next(this.state);
+    this.messages$.next(message);
   }
 }
 
