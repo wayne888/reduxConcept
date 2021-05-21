@@ -17,6 +17,6 @@ export class BookListComponent implements OnInit {
   ngOnInit(): void {}
 
   addBook(): void {
-    this.service.addBook();
+    this.service.dispatch("ADD BOOK");
   }
 }
